@@ -100,3 +100,22 @@ def getRandomizedBoard():
 
 
 
+def main():
+    global FPSCLOCK, DISPLAYSURF
+    pygame.init()
+    FPSCLOCK = pygame.time.Clock()
+    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+
+    mousex = 0 #stores x coordinate of mouse event
+    mousey = 0 # y event
+    pygame.display.set_caption('Memory Game')
+
+    mainBoard = getRandomizedBoard()
+    revealedBoxes = generateRevealedBoxesData(False)
+
+    firstSelection = None # stores the (x, y) of first box clicked
+
+    DISPLAYSURF.fill(BGCOLOR)
+    startGameAnimation(mainBoard)
+
+    

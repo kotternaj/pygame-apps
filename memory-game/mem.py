@@ -43,3 +43,17 @@ OVAL = 'oval'
 ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN)
 ALLSHAPES = (DONUT, SQUARE, DIAMOND, LINES, OVAL)
 assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, "Board is too big for the number of shapes/colors defined."
+
+
+def getRandomizedBoard:
+    # get a list of every possible shape in every possible color
+    icons = []
+    for color in ALLCOLORS:
+        for shapes in ALLSHAPES:
+            icons.append((shape, color))
+
+    random.shuffle(icons) #randomize icons
+    numIconsUsed = int(BOARDWIDTH * BOARDHEIGHT /2) #calc how many icons are needed
+    icons = icons[:numIconsUsed] *2 #make two of each
+    random.shuffle(icons)
+

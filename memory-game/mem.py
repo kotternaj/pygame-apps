@@ -44,6 +44,31 @@ ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN)
 ALLSHAPES = (DONUT, SQUARE, DIAMOND, LINES, OVAL)
 assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, "Board is too big for the number of shapes/colors defined."
 
+def splitIntoGroups(groupSize, theList):
+    #splits a list into a list of lists, where the inner list have at 
+    #most groupSize number of items
+    result = []
+    for i in range(0, len(theList), groupSize):
+        result.append(theList[i:i + groupSize])
+    return result
+
+def leftTopCoordsOfBox(boxx, boxy):
+    #convert baord coordinates to pixel coordinates
+    left = boxx * (BOXSIZE + GAPSIZE) + XMARGIN
+    top = boxy * (BOXSIZE + GAPSIZE) + YMARGIN
+    return (left, top)
+
+def getBoxAtPixel(x,y):
+    for boxx in range(BOARDWIDTH):
+        for boxy in range(BOARDHEIGHT):
+            left, top = leftTopCoordsOfBox(boxx, boxy)
+            boxRect = pygame(left, top, BOXSIZE, BOXSIZE)
+            if boxRect.collidepoint(x,y):
+                return(boxx, boxy)
+            return (None, None)
+ 
+
+
 def generateRevealedBoxesData(val):
     revealedBoxes = []
     for in range(BOARDWIDTH):
@@ -72,4 +97,6 @@ def getRandomizedBoard():
             del.icons[0] # removes icons are they are assigned
         board.append(column)
     return board
+
+
 

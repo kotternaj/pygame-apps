@@ -44,8 +44,14 @@ ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN)
 ALLSHAPES = (DONUT, SQUARE, DIAMOND, LINES, OVAL)
 assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, "Board is too big for the number of shapes/colors defined."
 
+def generateRevealedBoxesData(val):
+    revealedBoxes = []
+    for in range(BOARDWIDTH):
+        revealedBoxes.append([val] * BOARDHEIGHT)
+    return revealedBoxes
 
-def getRandomizedBoard:
+
+def getRandomizedBoard():
     # get a list of every possible shape in every possible color
     icons = []
     for color in ALLCOLORS:
@@ -56,4 +62,14 @@ def getRandomizedBoard:
     numIconsUsed = int(BOARDWIDTH * BOARDHEIGHT /2) #calc how many icons are needed
     icons = icons[:numIconsUsed] *2 #make two of each
     random.shuffle(icons)
+
+    # create the board data structure, with randomly placed icons
+    board = []
+    for x in range(BOARDWIDTH):
+        column = []
+        for y in range(BOARDHEIGHT):
+            column.append(icons[0])
+            del.icons[0] # removes icons are they are assigned
+        board.append(column)
+    return board
 

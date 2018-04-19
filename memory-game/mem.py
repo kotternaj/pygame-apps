@@ -98,7 +98,20 @@ def getRandomizedBoard():
         board.append(column)
     return board
 
-
+def startGameAnimation(board):
+    #randomly reveal the boxes 8 at a time
+    coveredBoxes = generateRevealedBoxesData(False)
+    boxes = []
+    for x in range(BOARDWIDTH):
+        for y in range(BOARDHEIGHT):
+            boxes.append((x,y))
+        random.shuffle(boxes)
+        boxGroups = splitIntoGroups(8, boxes)
+    
+    drawBoard(board, coveredBoxes)
+    for boxGroup in boxGroups:
+        revealBoxesAnimation(board, boxGroup)
+        coveredBoxesAnimation(board, boxGroup)
 
 def main():
     global FPSCLOCK, DISPLAYSURF
@@ -118,4 +131,4 @@ def main():
     DISPLAYSURF.fill(BGCOLOR)
     startGameAnimation(mainBoard)
 
-    
+

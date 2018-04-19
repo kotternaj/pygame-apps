@@ -70,7 +70,7 @@ def getBoxAtPixel(x,y):
 
 def generateRevealedBoxesData(val):
     revealedBoxes = []
-    for in range(BOARDWIDTH):
+    for i in range(BOARDWIDTH):
         revealedBoxes.append([val] * BOARDHEIGHT)
     return revealedBoxes
 
@@ -79,7 +79,7 @@ def getRandomizedBoard():
     # get a list of every possible shape in every possible color
     icons = []
     for color in ALLCOLORS:
-        for shapes in ALLSHAPES:
+        for shape in ALLSHAPES:
             icons.append((shape, color))
 
     random.shuffle(icons) #randomize icons
@@ -93,9 +93,11 @@ def getRandomizedBoard():
         column = []
         for y in range(BOARDHEIGHT):
             column.append(icons[0])
-            del.icons[0] # removes icons are they are assigned
+            del icons[0] # removes icons as they are assigned
         board.append(column)
     return board
+
+
 
 def drawBoxCovers(board, boxes, coverage):
     # draw boxes being covered/revealed. 'boxes' is a list
@@ -121,9 +123,22 @@ def coverBoxesAnimation(board, boxesToCover):
     for coverage in range(0, BOXSIZE, +REVEALSPEED, REVEALSPEED):
         drawBoxCovers(board, boxesToCover, coverage)
 
-def drawHighlightBox(boxx, boxy:)
-left, top = leftTopCoordsOfBox(boxx, boxy)
-pygame.draw.rect(DISPLAYSUR,F HIGHLIGHTCOLOR, (left -5 , top - 5, BOXSIZE + 10, BOXSIZE + 10), 4)
+def drawBoard(board, revealed):
+    # draws all boxes in their covered or revealed state
+    for boxx in range(BOARDWIDTH):
+        for boxy in range(BOARDHEIGHT):
+            left, top = leftTopCoordsOfBox(boxx, boxy)
+            if not revealed[boxx][boxy]:
+                # draw a covered box
+                pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
+            else:
+                shape, color = getShapeAndColor(board, boxx, boxy)
+                drawIcon(shape, color, boxx, boxy)
+
+
+def drawHighlightBox(boxx, boxy):
+    left,top = leftTopCoordsOfBox(boxx, boxy)
+    pygame.draw.rect(DISPLAYSURF, HIGHLIGHTCOLOR, (left -5 , top - 5, BOXSIZE + 10, BOXSIZE + 10), 4)
 
 def startGameAnimation(board):
     #randomly reveal the boxes 8 at a time
@@ -179,6 +194,6 @@ def main():
     startGameAnimation(mainBoard)
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     main()
 

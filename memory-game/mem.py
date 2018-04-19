@@ -98,6 +98,20 @@ def getRandomizedBoard():
         board.append(column)
     return board
 
+def revealBoxesAnimation(board, boxesToReveal):
+    # reveal box animation
+    for coverage in range(BOXSIZE, (-REVEALSPEED) -1, -REVEALSPEED):
+        drawBoxCovers(board, boxesToReveal, coverage)
+
+def coverBoxesAnimation(board, boxesToCover):
+    # cover box animation
+    for coverage in range(0, BOXSIZE, +REVEALSPEED, REVEALSPEED):
+        drawBoxCovers(board, boxesToCover, coverage)
+
+def drawHighlightBox(boxx, boxy:)
+left, top = leftTopCoordsOfBox(boxx, boxy)
+pygame.draw.rect(DISPLAYSUR,F HIGHLIGHTCOLOR, (left -5 , top - 5, BOXSIZE + 10, BOXSIZE + 10), 4)
+
 def startGameAnimation(board):
     #randomly reveal the boxes 8 at a time
     coveredBoxes = generateRevealedBoxesData(False)
@@ -155,4 +169,3 @@ def main():
 if __name__ = '__main__':
     main()
 
-    

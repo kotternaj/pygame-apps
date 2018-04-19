@@ -65,8 +65,7 @@ def getBoxAtPixel(x,y):
             boxRect = pygame(left, top, BOXSIZE, BOXSIZE)
             if boxRect.collidepoint(x,y):
                 return(boxx, boxy)
-            return (None, None)
- 
+            return (None, None) 
 
 
 def generateRevealedBoxesData(val):
@@ -97,6 +96,20 @@ def getRandomizedBoard():
             del.icons[0] # removes icons are they are assigned
         board.append(column)
     return board
+
+def drawBoxCovers(board, boxes, coverage):
+    # draw boxes being covered/revealed. 'boxes' is a list
+    # of two-items, which have the x & y spot of the box
+    for box in boxes:
+        left, top = leftTopCoordsOfBox(box[0], box[1])
+        pygame.draw.rect(DISPLAYSURF, BGCOLOR, (left, top, BOXSIZE, BOXSIZE))
+        shape, color = getShapeAndColor(board, box[0], box[1])
+        drawIcon(shape, color, box[0], box[1])
+        if coverage > 0: #only draw the cover if there is coverage
+            pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, coverage, BOXSIZE))
+    pygame.display.update()
+    FPSCLOCK.tick(FPS)
+          
 
 def revealBoxesAnimation(board, boxesToReveal):
     # reveal box animation

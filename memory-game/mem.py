@@ -97,6 +97,26 @@ def getRandomizedBoard():
         board.append(column)
     return board
 
+def drawIcon(shape, color, boxx, boxy):
+    quarter = int(BOXSIZE * .25)
+    half = int(BOXSIZE * .5)
+
+    left, top = leftTopCoordsOfBox(boxx, boxy) # get pixel coords from board coords
+    # draw the shapes
+    if shape == DONUT:
+        pygame.draw.circle(DISPLAYSURF, color, (left + half, top + half), half - 5)
+        pygame.draw.circle(DISPLAYSURF, BGCOLOR, (left + half, top + half), quarter - 5)
+    elif shape == SQUARE:
+        pygame.draw.rect(DISPLAYSURF, color, (left+quarter, top+quarter, BOXSIZE-half, BOXSIZE-half))
+    elif shape == DIAMOND:
+        pygame.draw.polygon(DISPLAYSURF, color, ((left + half, top), (left + BOXSIZE - 1, top + half), (left + half, top + BOXSIZE -1), (left, top + half)))       
+    elif shape == LINES:
+        for i in range(0, BOXSIZE, 4):
+            pygame.draw.line(DISPLAYSURF, color, (left, top + i), (left + i, top))
+            pygame.draw.line(DISPLAYSURF, color, (left + i, top + BOXSIZE -1), (left + BOXSIZE - 1, top + i))
+    elif shape == OVAL:
+        pygame.draw.ellipse(DISPLAYSURF, color, (left, top + quarter, BOXSIZE, half)    
+    
 def getShapeAndColor(board, boxx, boxy):
     # shape value for x, y spot is stored in board[x][y][0]
     # color value for x,y spot is stored in board[x][y][1]
@@ -123,7 +143,7 @@ def revealBoxesAnimation(board, boxesToReveal):
 
 def coverBoxesAnimation(board, boxesToCover):
     # cover box animation
-    for coverage in range(0, BOXSIZE, +REVEALSPEED, REVEALSPEED):
+    for coverage in range(0, BOXSIZE + REVEALSPEED, REVEALSPEED):
         drawBoxCovers(board, boxesToCover, coverage)
 
 def drawBoard(board, revealed):
@@ -156,7 +176,7 @@ def startGameAnimation(board):
     drawBoard(board, coveredBoxes)
     for boxGroup in boxGroups:
         revealBoxesAnimation(board, boxGroup)
-        coveredBoxesAnimation(board, boxGroup)
+        coverBoxesAnimation(board, boxGroup)
 
 def gameWonAnimation(board):
     # flash the background color when player has won

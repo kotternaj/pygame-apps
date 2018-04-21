@@ -100,3 +100,10 @@ def makeMoveBoard(board, move):
         board[blankx][blanky], board[blankx + 1][blanky] = board[blankx + 1][blanky], board[blankx][blanky]
     elif move == RIGHT:
     board[blankx][blanky], board[blankx - 1][blanky] = board[blankx - 1][blanky], board[blankx][blanky]
+
+def isValidMove(board, move):
+    blankx, blanky = getBlankPosition(board)
+    return (move == UP and blank != len(board[0] - 1) or \
+        (move == DOWN and blanky !=0) or \
+        (move == LEFT and blankx != len(board) - 1) or \
+        (move == RIGHT and blankx != 0)

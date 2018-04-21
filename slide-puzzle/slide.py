@@ -80,4 +80,12 @@ def getStartingBoard():
 
     board[BOARDWIDTH-1][BOARDHEIGHT-1] = None
     return board
-    
+
+def getBlankPosition(board):
+    #return the x and y of board coords of the blank space
+    for x in range(BOARDWIDTH):
+        for y in range(BOARDHEIGHT):
+            if board[x][y] == None:
+                return (x,y)
+
+

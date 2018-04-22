@@ -106,7 +106,7 @@ def isValidMove(board, move):
     return (move == UP and blank != len(board[0] - 1) or \
         (move == DOWN and blanky !=0) or \
         (move == LEFT and blankx != len(board) - 1) or \
-        (move == RIGHT and blankx != 0)
+        (move == RIGHT and blankx != 0))
 
 def getRandomMove(board, lastMove=None):
     #start with a full list of all four moves
@@ -129,3 +129,22 @@ def getLeftTopOfTile(tileX, tileY):
     left = XMARGIN + (tileX * TILESIZE) + (tileX - 1)
     top = YMARGIN + (tileY * TILESIZE) + (tileY - 1)
     return (left, top)
+
+def getSpotClicked(board, x, y):
+    # from the x & y pixel coords, get the x & y board coords
+    for tileX in range(len(board)):
+        left, top = getLeftTopOfTile(tileX, tileY)
+        tileRect = pygame.Rect(left, top, TILESIZE, TILESIZE)
+        if tileRect.collidepoint(x, y):
+            return(tileX, tileY)
+    return(None, None)
+
+def drawTile(tilex, tiley, number, adjx=0, adjy=0):
+    #draw a tile at board coords tilex and tiley, optionally a few
+    #pixels over (determined by adjx and adjy)
+    left, top = getLeftTopOfTile(tilex, tiley)
+    pygame.draw.rect(DISPLAYSURF, TILECOLOR, (left + adjx, top + adjy, TILESIZE, TILESIZE))
+    textSurf = BASICFONT.render(str(number), True, TEXTCOLOR)
+    textRect = text.Surf.get_rect()
+    textRect.center = left + int(TILESIZE / 2) + adjx, top + in(TILESIZE / 2) + adjy
+    DISPLAYSURF.blit(textSurf, textRect)

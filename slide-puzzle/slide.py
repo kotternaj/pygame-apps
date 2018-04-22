@@ -64,6 +64,18 @@ def drawBoard(board, message):
     DISPLAYSURF.blit(NEW_SURF, NEW_RECT)
     DISPLAYSURF.blit(SOLVE_SURF, SOLVE_RECT)
 
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+def checkForQuit():
+    for event in pygame.event.get(QUIT): #get all QUIT event
+        terminate() #terminate if any QUIT events are present
+    for event in pygame.event.get(KEYUP): #get all KEYUP events
+        if event.key == K_ESCAPE:
+            terminate() #terminate if the KEYUP was for the Esc key
+        pygame.event.post(event) #put the other KEYUP even objects back   
+
 def getStartingBoard():
     #return a board data structure with tiles in the solved state
     #for example, if BOARDWIDTH and BOARDHEIGHT are both 3, this function
@@ -156,3 +168,4 @@ def makeText(text, color, bgcolor, top, left):
     textRect.topleft = (top, left)
     return (textSurf, textRect)
 
+def 

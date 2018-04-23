@@ -52,7 +52,7 @@ def main():
 
     mainBoard, solutionSeq = generateNewPuzzle(80)
     SOLVEDBOARD = getStartingBoard() # a solved board is the same as a board in a start state
-    allMoves() = [] # list of moves made from the solved configuration
+    allMoves = [] # list of moves made from the solved configuration
 
     while True: #main game loop
         slideTo = None # the direction, if any, a tile should slide
@@ -153,10 +153,50 @@ def getStartingBoard():
             column.append(counter)
             counter +=  BOARDWIDTH
         board.append(column)
-        counter -= BOARDWIDTH * (BOARDHEIGHT - 1) + BOARDWIDTh - 1
+        counter -= BOARDWIDTH * (BOARDHEIGHT - 1) + BOARDWIDTH - 1
 
     board[BOARDWIDTH-1][BOARDHEIGHT-1] = None
     return board
+
+def slideAnimation(board, direction, message, animationSpeed):
+    # Note: This function does not check if the move is valid.
+
+    blankx, blanky = getBlankPosition(board)
+    if direction == UP:
+        movex = blankx
+        movey = blanky + 1
+    elif direction == DOWN:
+        movex = blankx
+        movey = blanky - 1
+    elif direction == LEFT:
+        movex = blankx + 1
+        movey = blanky
+    elif direction == RIGHT:
+        movex = blankx - 1
+        movey = blanky
+
+    # prepare the base surface
+    drawBoard(board, message)
+    baseSurf = DISPLAYSURF.copy()
+    # draw a blank space over the moving tile on the baseSurf Surface.
+    moveLeft, moveTop = getLeftTopOfTile(movex, movey)
+    pygame.draw.rect(baseSurf, BGCOLOR, (moveLeft, moveTop, TILESIZE, TILESIZE))
+
+    for i in range(0, TILESIZE, animationSpeed):
+        # animate the tile sliding over
+        checkForQuit()
+        DISPLAYSURF.blit(baseSurf, (0, 0))
+        if direction == UP:
+            drawTile(movex, movey, board[movex][movey], 0, -i)
+        if direction == DOWN:
+            drawTile(movex, movey, board[movex][movey], 0, i)
+        if direction == LEFT:
+            drawTile(movex, movey, board[movex][movey], -i, 0)
+        if direction == RIGHT:
+            drawTile(movex, movey, board[movex][movey], i, 0)
+
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
 
 def generateNewPuzzle(numSlides):
     #from a starting configuration, make numSlides number of moves (and animate moves)
@@ -181,7 +221,7 @@ def getBlankPosition(board):
             if board[x][y] == None:
                 return (x,y)
 
-def makeMoveBoard(board, move):
+def makeMove(board, move):
     #this function does not check if the move is valid
     blankx, blanky = getBlankPosition(board)
 
@@ -192,14 +232,14 @@ def makeMoveBoard(board, move):
     elif move == LEFT:
         board[blankx][blanky], board[blankx + 1][blanky] = board[blankx + 1][blanky], board[blankx][blanky]
     elif move == RIGHT:
-    board[blankx][blanky], board[blankx - 1][blanky] = board[blankx - 1][blanky], board[blankx][blanky]
+        board[blankx][blanky], board[blankx - 1][blanky] = board[blankx - 1][blanky], board[blankx][blanky]
 
 def isValidMove(board, move):
     blankx, blanky = getBlankPosition(board)
-    return (move == UP and blank != len(board[0] - 1) or \
-        (move == DOWN and blanky !=0) or \
-        (move == LEFT and blankx != len(board) - 1) or \
-        (move == RIGHT and blankx != 0))
+    return (move == UP and blanky != len(board[0]) - 1) or \
+           (move == DOWN and blanky !=0) or \
+           (move == LEFT and blankx != len(board) - 1) or \
+           (move == RIGHT and blankx != 0)
 
 def getRandomMove(board, lastMove=None):
     #start with a full list of all four moves
@@ -216,7 +256,7 @@ def getRandomMove(board, lastMove=None):
         validMoves.remove(LEFT)
 
     #return a random move from the list or remaining moves
-    return rand.choice(validMoves)
+    return random.choice(validMoves)
 
 def getLeftTopOfTile(tileX, tileY):
     left = XMARGIN + (tileX * TILESIZE) + (tileX - 1)
@@ -238,8 +278,8 @@ def drawTile(tilex, tiley, number, adjx=0, adjy=0):
     left, top = getLeftTopOfTile(tilex, tiley)
     pygame.draw.rect(DISPLAYSURF, TILECOLOR, (left + adjx, top + adjy, TILESIZE, TILESIZE))
     textSurf = BASICFONT.render(str(number), True, TEXTCOLOR)
-    textRect = text.Surf.get_rect()
-    textRect.center = left + int(TILESIZE / 2) + adjx, top + in(TILESIZE / 2) + adjy
+    textRect = textSurf.get_rect()
+    textRect.center = left + int(TILESIZE / 2) + adjx, top + int(TILESIZE / 2) + adjy
     DISPLAYSURF.blit(textSurf, textRect)
 
 def makeText(text, color, bgcolor, top, left):
@@ -249,4 +289,5 @@ def makeText(text, color, bgcolor, top, left):
     textRect.topleft = (top, left)
     return (textSurf, textRect)
 
-def 
+if __name__ == '__main__':
+    main()

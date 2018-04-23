@@ -93,6 +93,22 @@ def getStartingBoard():
     board[BOARDWIDTH-1][BOARDHEIGHT-1] = None
     return board
 
+def generateNewPuzzle(numSlides):
+    #from a starting configuration, make numSlides number of moves (and animate moves)
+    sequence = []
+    board = getStartingBoard()
+    drawBoard(board, '')
+    pygame.display.update()
+    pygame.time.wait(500) #pause 500 ms for effect
+    lastMove = None
+    for i in range(numSlides):
+        move = getRandomMove(board, lastMove)
+        slideAnimation(board, move, 'Generating new puzzle...', animationSpeed=int(TILESIZE / 3))
+        makeMove(board, move)
+        sequence.append(move)
+        lastMove = move
+    return (board, sequence)
+
 def getBlankPosition(board):
     #return the x and y of board coords of the blank space
     for x in range(BOARDWIDTH):

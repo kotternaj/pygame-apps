@@ -60,6 +60,15 @@ def drawButtons():
     pygame.draw.rect(DISPLAYSURF, RED, REDRECT)
     pygame.draw.rect(DISPLAYSURF, GREEN, GREENRECT)
 
+def getButtonClicked(x,y):
+    if YELLOWRECT.collidepoint( (x,y) ):
+        return YELLOW
+    elif BLUERECT.collidepoint( (x,y) ):
+        return BLUE
+    elif REDRECT.collidepoint( (x,y) ):
+        return RED
+    elif GREENRECT.collidepoint( (x,y) ):        
+
 if __name__ == '__main__':
     main()
 

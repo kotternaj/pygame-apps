@@ -41,6 +41,64 @@ def main():
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Simulate')
 
+    BASICFONT = pygame.font.Font('freesansbold.ttf', 16)
+
+    infoSurf = BASICFONT.render('Match the pattern by clicking on the button or using the QWAS keys', 1, DARKGRAY)
+    infoRect = infoSurf.get_rect()
+    infoRect.topleft = (10, WINDOWHEIGHT, -25)
+
+    #load sound files
+    BEEP1 = pygame.mixer.Sound('beep1.ogg')
+    BEEP2 = pygame.mixer.Sound('beep2.ogg')
+    BEEP3 = pygame.mixer.Sound('beep3.ogg')
+    BEEP4 = pygame.mixer.Sound('beep4.ogg')
+
+    # initialize some variables for a new game
+    pattern = []
+    currentStep = 0
+    lastClickTime = 0
+    score = 0
+
+    # when False, the pattern is playing. when True, waiting for the player to click a colored button:
+    waitingForInput = False
+
+    while True: # main game loop
+        clickedButton = None #button that was clicked(set to Y, R, G or Blue)
+        DISPLAYSURF.fill(bgColor)
+        drawButtons()
+
+        scoreSurf  = BASICFONT.render('Score: ' + str(score), 1, WHITE)
+        scoreRect = scoreSurf.get_rect()
+        scoreRect.topleft = (WINDOWWIDTH - 100, 10)
+        DISPLAYSURF.blit(scoreSurf, scoreRect)
+
+        DISPLAYSURF.blit(infoSurf, infoRect)
+
+        checkForQuit()
+        for event in pygame.event.get(): 
+            if event.type == MOUSEBUTTONUP:
+                mousex, mousey == event.pos
+                clickedButton = getButtonClicked(mousex, mousey)
+            elif event.type == KEYDOWN:
+                if event.key == K_q:
+                    clickedButton = YELLOW
+                elif event.key == K_w:
+                    clickedButton = BLUE
+                elif event.key == K_a:
+                    clickedButton = RED
+                elif event.key == K_s:
+                    event.key = GREEN
+        
+        if not waitingForInput:
+            #play the pattern
+            pygame.display.update()
+            pygame.time.wait(1000)
+            pattern.append(random.choice (( YELLOW, BLUE, RED, GREEN)))
+            for button in pattern:
+                flashButtonAnimation(button)
+                pygame.time.wait(FLASHDELAY)
+            waitingForInput = True
+        
 
 def terminate():
     pygame.quit()

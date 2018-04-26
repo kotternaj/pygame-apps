@@ -125,7 +125,7 @@ def main():
             
         pygame.display.update()
         FPSCLOCK.tick(FPS)
-        
+
 
 def terminate():
     pygame.quit()
@@ -165,6 +165,30 @@ def drawButtons():
     pygame.draw.rect(DISPLAYSURF, BLUE, BLUERECT)
     pygame.draw.rect(DISPLAYSURF, RED, REDRECT)
     pygame.draw.rect(DISPLAYSURF, GREEN, GREENRECT)
+
+def gameOverAnmiation(color = WHITE, animationSpeed=50):
+    #play all beeps at once, then flash background
+    origSurf = DISPLAYSURF.copy()
+    flashSurf = pygame.Surface(DISPLAYSURF.get_size())
+    flashSurf = flashSurf.convert_alpha()
+    BEEP1.play() #play all 4 beeps at roughly same time
+    BEEP2.play()
+    BEEP3.play()
+    BEEP4.play()
+    r, g, b = color
+    for i in range(3): #do flash 3 times
+        for start, end, step in ((0, 255, 1), (255, 0, -1)):
+            # the first iteration in this loop sets the following for loop
+            # to go from 0 to 255, the second time from 255 to 0
+            for alpha in range(start, end, animationSpeed * step): # animation loop
+                #alpha means transparency. 255 is opaque, 0 is invisible
+                checkForQuit()
+                flashSurf.fill((r,g,b,alpha))
+                DISPLAYSURF.blit(origSurf, (0,0))
+                DISPLAYSURF.blit(flashSurf, (0,0))
+                drawButtons()
+                pygame.display.update()
+                FPSCLOCK.tick(FPS)
 
 def getButtonClicked(x,y):
     if YELLOWRECT.collidepoint( (x,y) ):

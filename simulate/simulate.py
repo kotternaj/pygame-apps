@@ -112,7 +112,7 @@ def main():
                     waitingForInput = False
                     currentStep = 0 # reset back to first step
             
-            elif (clickedButton and clickedButton != pattern[currentStep] or (currentStep != 0 and time.time() - TIMEOUT > lastClickTime):
+            elif (clickedButton and clickedButton != pattern[currentStep]) or (currentStep != 0 and time.time() - TIMEOUT > lastClickTime):
                 # pushed the incorrect button, or has timed out
                 gameOverAnmiation()
                 # reset the variables for a new game:
@@ -138,6 +138,38 @@ def checkForQuit():
         if event.key == K_ESCAPE:
             terminate() # terminate if the KEYUP event was for the Esc key
         pygame.event.post(event) # put the other KEYUP event objects back
+
+def flashButtonAnimation(color, animationSpeed=50):
+    if color == YELLOW:
+        sound = BEEP1
+        flashColor = BRIGHTYELLOW
+        rectangle = YELLOWRECT
+    elif color == BLUE:
+        sound = BEEP2
+        flashColor = BRIGHTBLUE
+        rectangle = BLUERECT
+    elif color == RED:
+        flashColor = BRIGHTRED
+        rectangle = REDRECT
+        sound = BEEP3
+    elif color == GREEN:
+        sound = BEEP4
+        flashColor = BRIGHTGREEN
+        rectangle = GREENRECT
+    
+    origSurf = DISPLAYSURF.copy()
+    flashSurf = pygame.Surface((BUTTONSIZE, BUTTONSIZE))
+    flashSurf = flashSurf.convert_alpha()
+    sound.play()
+    for start, end, step in ((0,255,1), (255,0,-1)): 
+        for alpha in range(start, end, animationSpeed * step):
+            checkForQuit()
+            DISPLAYSURF.blit(origSurf, (0,0))
+            flashSurf.fill((r, g, b, alpha))
+            DISPLAYSURF.blit(flashSurf, rectangle.topleft)
+            pygame.display.update()
+            FPSCLOCK.tick(FPS)
+    DISPLAYSURF.blit(origSurf, (0,0))
 
 def changeBackgroundAnimation(animationSpeed=40):
     global bgColor
@@ -197,7 +229,9 @@ def getButtonClicked(x,y):
         return BLUE
     elif REDRECT.collidepoint( (x,y) ):
         return RED
-    elif GREENRECT.collidepoint( (x,y) ):        
+    elif GREENRECT.collidepoint( (x,y) ):  
+        return GREEN
+    return None      
 
 if __name__ == '__main__':
     main()

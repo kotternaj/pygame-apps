@@ -60,3 +60,9 @@ def drawWorm(wormCoords):
     wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, CELLSIZE - 8, CELLSIZE - 8)
     pygame.draw.rect(DISPLAYSURF, GREEN, wormInnerSegmentRect)
 
+def drawApple(coord):
+    x = coord['x'] * CELLSIZE
+    y = coord['y'] * CELLSIZE
+    appleRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
+    pygame.draw.rect(DISPLAYSURF, RED, appleRect)
+    

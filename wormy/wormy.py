@@ -52,6 +52,12 @@ def checkForKeyPress():
         terminate()
     return keyUpEvents[0].key
 
+def drawScore(score):
+    scoreSurf = BASICFONT.render('Score: %s' %(score, True, WHITE))
+    scoreRect = scoreSurf.get_rect()
+    scoreRect.topleft = (WINDOWWIDTH - 120, 10)
+    DISPLAYSURF.blit(scoreSurf, scoreRect)
+
 def drawWorm(wormCoords):
     x = coord['x'] * CELLSIZE
     y = coord['y'] * CELLSIZE

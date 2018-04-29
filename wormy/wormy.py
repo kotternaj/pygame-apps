@@ -35,7 +35,45 @@ def main():
     BASICFONT = pygame.font.Font('freesansbold.ttf', 18)
     pygame.display.set_caption('Wormy')
 
+    showGameOverScreen()
+    while True:
+        runGame()
+        showGameOverScreen()
 
+def runGame():
+    # set a random start point
+    startx = random.randint(5, CELLWIDTH - 6)
+    starty = random.randint.(5, CELLHEIGHT - 6)
+    wormCoords = [{'x': startx,     'y': starty},
+                  {'x': startx - 1, 'y': starty},
+                  {'x': startx - 2, 'y': starty}]
+    direction = RIGHT
+
+    # Start the apple in a random place
+    apple = getRandomLocation()
+
+    while True: # main game loop
+        for event in pygame.event.get(): #event handling loop
+            if event.type == QUIT:
+                terminate()
+            elif event.type == KEYDOWN:
+                if (event.key == K_LEFT or event.key == K_a) and direction != RIGHT:
+                    direction = LEFT
+                elif event.type == KEYDOWN:
+                if (event.key == K_RIGHT or event.key == K_d) and direction != LEFT:
+                    direction = RIGHT
+                elif event.type == KEYDOWN:
+                if (event.key == K_UPor event.key == K_w) and direction != DOWN:
+                    direction = UP
+                elif event.type == KEYDOWN:
+                if (event.key == K_DOWN or event.key == K_s) and direction != UP:
+                    direction = DOWN
+                elif event.key == K_ESCAPE:
+                    terminate()
+        
+        # check if the worm has hit itself or the edge
+        
+                                
 def drawPressKeyMsg():
     pressKeySurf = BASICFONT.render('Press a keyt to play', True, DARKGRAY)
     pressKeyRect = pressKeySurf.get_rect()
@@ -90,8 +128,6 @@ def getRandomLocation():
     return { 'x': random.randint(0, CELLWIDTH - 1), 
     'y': random.randint(0, CELLHEIGHT -1)}
 
-
-
 def showGameOverScreen():
     gameOverFont = pygame.font.Font('freesansbold.ttf', 150)
     gameSurf = gameOverFont.render('Game', True, WHITE)
@@ -139,3 +175,5 @@ def drawGrid():
     for y in range(0, WINDOWHEIGHT, CELLSIZE): #draw horizontal lines
         pygame.draw.line(DISPLAYSURF, DARKGRAY, (x,0), (x, WINDOWWIDTH))
 
+if __name__ = '__main__':
+    main()

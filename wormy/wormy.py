@@ -34,7 +34,7 @@ def main():
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     BASICFONT = pygame.font.Font('freesansbold.ttf', 18)
     pygame.display.set_caption('Wormy')
-    
+
 
 def drawPressKeyMsg():
     pressKeySurf = BASICFONT.render('Press a keyt to play', True, DARKGRAY)
@@ -52,6 +52,16 @@ def checkForKeyPress():
     if keyUpEvents[0].key == K_ESCAPE:
         terminate()
     return keyUpEvents[0].key
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+def getRandomLocation():
+    return { 'x': random.randint(0, CELLWIDTH - 1), 
+    'y': random.randint(0, CELLHEIGHT -1)}
+
+
 
 def showGameOverScreen():
     gameOverFont = pygame.font.Font('freesansbold.ttf', 150)

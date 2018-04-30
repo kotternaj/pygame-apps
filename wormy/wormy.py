@@ -72,7 +72,20 @@ def runGame():
                     terminate()
         
         # check if the worm has hit itself or the edge
+        if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == CELLWIDTH or wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['y'] == CELLHEIGHT:
+            return # game over
+        for wormBody in wormCoords[1:]:
+            if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody[HEAD]['y']:
+                return # game over
+        
+        # check if worm has eaten an apple
+        if wormCoords[HEAD]['x'] == apple['x'] and wormCoords[HEAD]['y'] == apple['y']:
+            # don't remove a worm's tail segment
+            apple = getRandomLocation() # set a new apple somewhere
+        else:
+            del wormCoords[-1] # remove worm's tail segment
 
+        
                                 
 def drawPressKeyMsg():
     pressKeySurf = BASICFONT.render('Press a keyt to play', True, DARKGRAY)

@@ -84,7 +84,26 @@ def runGame():
             apple = getRandomLocation() # set a new apple somewhere
         else:
             del wormCoords[-1] # remove worm's tail segment
+ 
+        # move the worm by adding a segment in the direction it is movin
+        if direction == UP:
+            newHead = { 'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] - 1}
+        elif direction ==  DOWN:
+            newHead = { 'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] + 1}
+        elif direction ==  LEFT:
+            newHead = { 'x': wormCoords[HEAD]['x'] - 1, 'y': wormCoords[HEAD]['y']}
+        elif direction ==  RIGHT:
+            newHead = { 'x': wormCoords[HEAD]['x'] + 1, 'y': wormCoords[HEAD]['y']}
 
+        wormCoords.insert(0, newHead)
+        DISPLAYSURF.fill(BGCOLOR)
+        drawGrid()
+        drawWorm(wormCoords)
+        drawApple(apple)
+        drawScore(len(wormCoords) -3)
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+       
         
                                 
 def drawPressKeyMsg():

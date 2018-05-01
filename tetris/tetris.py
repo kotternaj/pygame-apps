@@ -221,5 +221,17 @@ def drawStatus(score, level):
     scoreRect.topleft = (WINDOWWIDTH - 150, 50)
     DISPLAYSURF.blit(levelSurf, levelRect)
 
+def drawNextPiece(piece):
+    # draw the 'next' text
+    nextSurf = BASICFONT.render('Next: ', True, TEXTCOLOR)
+    nextRect = nextSurf.get_rect()
+    nextRect.topleft = (WINDOWWIDTH - 120, 80)
+    DISPLAYSURF.blit(nextSurf, nextRect)
+    # draw the 'next' piece
+    drawPiece(piece, pixelx=WINDOWWIDTH-120, pixely=100)
+
+if __name__ == '__main__':
+    main()
+
 
 

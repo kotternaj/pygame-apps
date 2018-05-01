@@ -208,5 +208,18 @@ def drawBox(boxx, boxy, color, pixelx=None, pixely=None):
     pygame.draw.rect(DISPLAYSURF, COLORS[color], (pixelx + 1, pixely + 1,BOXSIZE - 1, BOXSIZE -1))
     pygame.draw.rect(DISPLAYSURF, LIGHTCOLORS[color], (pixelx + 1, pixely + 1, boxsize - 4, BOXSIZE - 4))
 
+def drawStatus(score, level):
+    # draw the score text
+    scoreSurf = BASICFONT.render('Score: %s' % score, True, TEXTCOLOR)
+    scoreRect = scoreSurf.get_rect()
+    scoreRect.topleft = (WINDOWWIDTH - 150, 20)
+    DISPLAYSURF.blit(scoreSurf, scoreRect)
+
+    # draw the level text
+    levelSurf = BASICFONT.render('Level: %s' % level, True, TEXTCOLOR)
+    levelRect = levelSurf.get_rect()
+    scoreRect.topleft = (WINDOWWIDTH - 150, 50)
+    DISPLAYSURF.blit(levelSurf, levelRect)
+
 
 

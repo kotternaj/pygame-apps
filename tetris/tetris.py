@@ -182,4 +182,12 @@ def calculateLevelAndFallFreq(score):
     fallFreq = 0.27 - (level * 0.02)
     return level, fallFreq
 
+def addToBoard(board, piece):
+    # fill in board based on piece's location, shape, and rotation
+    for x in range(TEMPLATEWIDTH):
+        for y in range(TEMPLATEHEIGHT):
+            if PIECES[piece['shape']][piece['rotation']][y][x] != BLANK:
+                board[x + piece['x'][y + piece ['y']] = piece[color]
+
+
 

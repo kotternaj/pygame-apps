@@ -75,7 +75,7 @@ def runGame():
         if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == CELLWIDTH or wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['y'] == CELLHEIGHT:
             return # game over
         for wormBody in wormCoords[1:]:
-            if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody[HEAD]['y']:
+            if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody['y'] == wormCoords[HEAD]['y']:
                 return # game over
         
         # check if worm has eaten an apple
@@ -182,18 +182,19 @@ def showGameOverScreen():
             return
 
 def drawScore(score):
-    scoreSurf = BASICFONT.render('Score: %s' %(score, True, WHITE))
+    scoreSurf = BASICFONT.render('Score: %s' %(score), True, WHITE)
     scoreRect = scoreSurf.get_rect()
     scoreRect.topleft = (WINDOWWIDTH - 120, 10)
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 def drawWorm(wormCoords):
-    x = coord['x'] * CELLSIZE
-    y = coord['y'] * CELLSIZE
-    wormSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
-    pygame.draw.rect(DISPLAYSURF, DARKGREEN, wormSegmentRect)
-    wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, CELLSIZE - 8, CELLSIZE - 8)
-    pygame.draw.rect(DISPLAYSURF, GREEN, wormInnerSegmentRect)
+    for coord in wormCoords:
+        x = coord['x'] * CELLSIZE
+        y = coord['y'] * CELLSIZE
+        wormSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
+        pygame.draw.rect(DISPLAYSURF, DARKGREEN, wormSegmentRect)
+        wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, CELLSIZE - 8, CELLSIZE - 8)
+        pygame.draw.rect(DISPLAYSURF, GREEN, wormInnerSegmentRect)
 
 def drawApple(coord):
     x = coord['x'] * CELLSIZE

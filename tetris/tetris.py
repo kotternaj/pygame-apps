@@ -168,3 +168,11 @@ def checkForKeyPress():
         return event.key 
     return None
 
+def getBlankBoard():
+    #create and return blank board structure
+    board = []
+    for i in range(BOARDWIDTH):
+        board.append([BLANK] * BOARDHEIGHT)
+    return board
+
+

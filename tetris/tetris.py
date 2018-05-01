@@ -189,5 +189,12 @@ def addToBoard(board, piece):
             if PIECES[piece['shape']][piece['rotation']][y][x] != BLANK:
                 board[x + piece['x'][y + piece ['y']] = piece[color]
 
+def isCompleteLine(board, y):
+    # return True if the line filled with boxes with no gaps
+    for x in range(BOARDWIDTH):
+        if board[x][y] == BLANK:
+            return False
+    return True
+
 
 

@@ -169,6 +169,22 @@ def main():
         pygame.mixer.music.stop()
         showTextScreen('Game Over')
 
+def runGame():
+    # setup variables for the start of the game
+    board = getBlankBoard()
+    lastMoveDownTime = time.time()
+    lastMoveSidewaysTime = time.time()
+    lastFallTime =  time.time()
+    movingDown = False # note: there is no movingUp variable
+    movingLeft = False
+    movingRight = False
+    score = 0
+    level, fallFreq = calculateLevelAndFallFreq(score)
+
+    fallingPiece = getNewPiece()
+    nextPiece = getNewPiece()
+
+    
 
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)

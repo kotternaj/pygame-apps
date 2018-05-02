@@ -149,6 +149,27 @@ PIECES = {'S': S_SHAPE_TEMPLATE,
           'O': O_SHAPE_TEMPLATE,
           'T': T_SHAPE_TEMPLATE}
 
+def main():
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, BIGFONT
+    pygame.init()
+    FPSCLOCK = pygame.time.Clock()
+    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    BASICFONT = pygame.font.Font('freesansbold.ttf', 18)
+    BIGFONT = pygame.font.Font('freesansbold.ttf', 100)
+    pygame.display.set_caption('Tetris Clone')
+
+    showTextScreen('Tetris')
+    while True: 
+        if random.randint(0,1) == 0:
+            pygame.mixer.music.load('tetrisb.mid')
+        else:
+            pygame.mixer.music.load('tetrisb.mid')
+        pygame.mixer.music.play(-1, 0.0)
+        runGame()
+        pygame.mixer.music.stop()
+        showTextScreen('Game Over')
+
+
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)
     return surf, surf.get_rect()
@@ -187,7 +208,7 @@ def addToBoard(board, piece):
     for x in range(TEMPLATEWIDTH):
         for y in range(TEMPLATEHEIGHT):
             if PIECES[piece['shape']][piece['rotation']][y][x] != BLANK:
-                board[x + piece['x'][y + piece ['y']] = piece[color]
+                board[x + piece['x']][y + piece ['y']] = piece[color]
 
 def isCompleteLine(board, y):
     # return True if the line filled with boxes with no gaps
@@ -241,6 +262,8 @@ def drawNextPiece(piece):
     DISPLAYSURF.blit(nextSurf, nextRect)
     # draw the 'next' piece
     drawPiece(piece, pixelx=WINDOWWIDTH-120, pixely=100)
+
+
 
 if __name__ == '__main__':
     main()

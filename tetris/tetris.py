@@ -211,10 +211,21 @@ def runGame():
             elif (event.key == K_RIGHT or event.key == K_d):
                 movingRight = False
             elif (event.key == K_DOWN or event.key == K_s):
-                movingDown = False
+                movingDown = False        
         
-        
-    
+        elif event.type == KEYDOWN:
+            # moving the piece sideways
+            if (event.key == K_LEFT or event.key == K_a) and isValidPosition(board, fallingPiece, adjX=-1):
+                fallingPiece['x'] -= 1
+                movingLeft = True
+                movingRight = False
+                lastMoveSidewaysTime = time.time()
+
+            elif (event.key == K_RIGHT or event.key == K_d) and isValidPosition(board, fallingPiece, adjX=1):
+                fallingPiece['x'] += 1
+                movingRight = True
+                movingLeft = False
+                lastMoveSidewaysTime = time.time()
 
 
 def makeTextObjs(text, font, color):

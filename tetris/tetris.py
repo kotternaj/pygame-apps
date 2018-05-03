@@ -184,6 +184,36 @@ def runGame():
     fallingPiece = getNewPiece()
     nextPiece = getNewPiece()
 
+    while True: # game loop
+        if fallingPiece = None:
+            # No falling piece in play, so start a new piece at the top
+            fallingPiece = nextPiece
+            nextPiece = getNewPiece()
+            lastFallTime = time.time() # reset lastFallTime
+        
+        if not isValidPosition(board, fallingPiece):
+            return # cant fit new piece on the board, so game over
+    
+    checkForQuit()
+    for event in pygame.event.get(): # event handling loop
+        if event.type == KEYUP
+            if (event.key == K_p):
+                # Pausing the game
+                DISPLAYSURF.fill(BGCOLOR)
+                pygame.mixer.music.stop()
+                showTextScreen('Paused') # pause until a key press
+                pygame.mixer.music.play(-1, 0.0)
+                lastFallTime = time.time()
+                lastMoveDownTime = time.time()
+                lastMoveSidewaysTime = time.time()
+            elif (event.key == K_LEFT or event.key == K_a):
+                movingLeft = False
+            elif (event.key == K_RIGHT or event.key == K_d):
+                movingRight = False
+            elif (event.key == K_DOWN or event.key == K_s):
+                movingDown = False
+        
+        
     
 
 

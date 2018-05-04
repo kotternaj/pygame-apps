@@ -243,6 +243,16 @@ def runGame():
                 if isValidPosition(board, fallingPiece, adjY=1):
                     fallingPiece['y'] += 1
                 lastMoveDownTime = time.time()
+            
+            # move the current piece all the way down
+            elif event.key == K_SPACE:
+                movingDown = False
+                movingLeft = False
+                movingRight = False
+                for i in range(1, BOARDHEIGHT):
+                    if not isValidPosition(board, fallingPiece, adjY=i):
+                        break
+                fallingPiece['y'] += i - 1
                 
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)

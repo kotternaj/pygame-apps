@@ -419,6 +419,18 @@ def drawNextPiece(piece):
     # draw the 'next' piece
     drawPiece(piece, pixelx=WINDOWWIDTH-120, pixely=100)
 
+def isValidPosition(board, piece, adjX=0, adjY=0):
+    # Return True if the piece is within the board and not colliding
+    for x in range(TEMPLATEWIDTH):
+        for y in range(TEMPLATEHEIGHT):
+            isAboveBoard = y + piece['y'] + adjY < 0
+            if isAboveBoard or PIECES['piece'['shape']][piece['rotation']][y][x] == BLANK:
+                continue
+        if not isOnBoard(x + piece['x'] + adjX, y + piece['y'] + adjY):
+            return False
+        if board[x + piece['x'] + adjX][y + piece['y'] + adjY] != BLANK:
+            return False
+    return True
 
 
 if __name__ == '__main__':

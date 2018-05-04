@@ -432,6 +432,10 @@ def isValidPosition(board, piece, adjX=0, adjY=0):
             return False
     return True
 
+def convertToPixelCoords(boxx, boxy):
+    # Convert the given xy coordinates of the board to xy
+    # coordinates of the location on the screen
+    return (XMARGIN + (boxx * BOXSIZE)), (TOPMARGIN + (boxy * BOXSIZE))
 
 if __name__ == '__main__':
     main()

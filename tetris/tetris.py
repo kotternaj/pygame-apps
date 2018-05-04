@@ -437,6 +437,27 @@ def convertToPixelCoords(boxx, boxy):
     # coordinates of the location on the screen
     return (XMARGIN + (boxx * BOXSIZE)), (TOPMARGIN + (boxy * BOXSIZE))
 
+def removeCompleteLines(board):
+    # Remove any completed lines on the board, move everything above them down, and return the number of complete lines.
+    numLinesRemoved = 0
+    y = BOARDHEIGHT - 1 # start y at the bottom of the board
+    while y >= 0:
+        if isCompleteLine(board, y):
+            # Remove the line and pull boxes down by one line.
+            for pullDownY in range(y, 0, -1):
+                for x in range(BOARDWIDTH):
+                    board[x][pullDownY] = board[x][pullDownY-1]
+            # Set very top line to blank.
+            for x in range(BOARDWIDTH):
+                board[x][0] = BLANK
+            numLinesRemoved += 1
+            # Note on the next iteration of the loop, y is the same.
+            # This is so that if the line that was pulled down is also
+            # complete, it will be removed.
+        else:
+            y -= 1 # move on to check next row up
+    return numLinesRemoved
+
 if __name__ == '__main__':
     main()
 

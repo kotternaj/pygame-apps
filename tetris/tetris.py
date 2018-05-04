@@ -261,7 +261,23 @@ def runGame():
                 elif movingRight and isValidPosition(board, fallingPiece, adjX=1):
                     fallingPiece['x'] += 1
                 lastMoveSidewaysTime = time.time()
+            
+            # let the piece fall if it is time to fall
+            if time.time() - lastFallTime > fallFreq:
+                # see if the piece has landed
+                if not isValidPosition(board, fallingPiece, adjY=1):
+                    # falling piece has landed, set it on the board
+                    addToBoard(board, fallingPiece)
+                    score += removeCompleteLines(board)
+                    level, fallFreq = calculateLevelAndFallFreq(score)
+                    fallingPiece = None
+                else:
+                    # piece did not land, just move the piece down
+                    fallingPiece['y'] += 1
+                    lastFallTime = time.time()
                 
+            
+
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)
     return surf, surf.get_rect()

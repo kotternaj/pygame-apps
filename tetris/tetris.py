@@ -226,7 +226,16 @@ def runGame():
                 movingRight = True
                 movingLeft = False
                 lastMoveSidewaysTime = time.time()
-
+                
+            # rotating the piece (if there is room to rotate)
+            elif (event.key == K_UP or event.key == K_w):
+                fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])
+                if not isValidPosition(board, fallingPiece):
+                    fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
+            elif (event.key == K_q): # rotate the other direction
+                fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
+                if not isValidPosition(board, fallingPiece):
+                    fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])        
 
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)

@@ -276,7 +276,16 @@ def runGame():
                     fallingPiece['y'] += 1
                     lastFallTime = time.time()
                 
-            
+            # drawing everything on the screen
+            DISPLAYSURF.fill(BGCOLOR)
+            drawBoard(board)
+            drawStatus(score, level)
+            drawNextPiece(nextPiece)
+            if fallingPiece != None:
+                drawPiece(fallingPiece)
+
+            pygame.display.update()
+            FPSCLOCK.tick(FPS)
 
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)

@@ -226,7 +226,7 @@ def runGame():
                 movingRight = True
                 movingLeft = False
                 lastMoveSidewaysTime = time.time()
-                
+
             # rotating the piece (if there is room to rotate)
             elif (event.key == K_UP or event.key == K_w):
                 fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])
@@ -236,7 +236,14 @@ def runGame():
                 fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
                 if not isValidPosition(board, fallingPiece):
                     fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])        
-
+            
+            # making the piece fall faster with the down key
+            elif (event.key == K_DOWN or event.key == K_s):
+                movingDown = True
+                if isValidPosition(board, fallingPiece, adjY=1):
+                    fallingPiece['y'] += 1
+                lastMoveDownTime = time.time()
+                
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)
     return surf, surf.get_rect()
